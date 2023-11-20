@@ -22,5 +22,24 @@ namespace App
             else
                 return input;
         }
+        public string CombineUrl(string part1, string part2)
+        {
+            //if (!part1.StartsWith('/')) part1 = '/' + part1;
+            //if (part1.EndsWith('/')) part1 = part1[..^1];
+            //
+            //if (!part2.StartsWith('/')) part2 = '/' + part2;
+            //if (part2.EndsWith('/')) part2 = part2[..^1];
+            //return $"{part1}{part2}";
+
+
+            while (part1.StartsWith('/')) { part1 = part1.Substring(1); }
+            part1 = '/' + part1;
+            while (part1.EndsWith('/')) { part1 = part1[..^1]; }
+
+            while (part2.StartsWith('/')) { part2 = part2.Substring(1); }
+            part2 = '/' + part2;
+            while (part2.EndsWith('/')) { part2 = part2[..^1]; }
+            return $"{part1}{part2}";
+        }
     }
 }
