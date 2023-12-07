@@ -5,7 +5,43 @@ namespace UnitTest
     [TestClass]               
     public class HelperTest   
     {
-        
+        [TestMethod]
+        public void TestEscapeHtml()
+        {
+            Helper helper = new();
+            Assert.IsNotNull(helper, "new Helper() should not be null");
+            Assert.AreEqual("&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;&lt;/body&gt;&lt;/html&gt;", helper.HtmlTest("<html><head></head><body></body></html>"));
+        }
+        [TestMethod]
+        public void TestEscapeHtmlEx()
+        {
+            Helper helper = new();
+            Assert.IsNotNull(helper, "new Helper() should not be null");
+
+            var ex = Assert.ThrowsException<ArgumentException>(
+                () => helper.HtmlTest(null!));
+            Assert.AreEqual("Argument 'html' is null", ex.Message);
+        }
+        [TestMethod]
+        public void ContainsAttributesTest()
+        {
+            Helper helper = new();
+            Assert.IsTrue(helper.ContainsAttributes("<div style=\"\"></div>"));
+            Assert.IsTrue(helper.ContainsAttributes("<i style=\"code\" ></div>"));
+            Assert.IsTrue(helper.ContainsAttributes("<i style=\"code\"  required ></div>"));
+            Assert.IsTrue(helper.ContainsAttributes("<i style='code'  required></div>"));
+            Assert.IsTrue(helper.ContainsAttributes("<i required style=\"code\" ></div>"));
+            Assert.IsTrue(helper.ContainsAttributes("<i required style=\"code\"></div>"));
+            Assert.IsTrue(helper.ContainsAttributes("<img onload=\"dangerCode()\" src=\"puc.png\"/>"));
+            Assert.IsTrue(helper.ContainsAttributes("<img width=100 />"));
+            Assert.IsFalse(helper.ContainsAttributes("<div></div>"));
+            Assert.IsFalse(helper.ContainsAttributes("<div ></div>"));
+            Assert.IsFalse(helper.ContainsAttributes("<br/>"));
+            Assert.IsFalse(helper.ContainsAttributes("<br />"));
+            Assert.IsFalse(helper.ContainsAttributes("<div required ></div>"));
+            Assert.IsFalse(helper.ContainsAttributes("<div required></div>"));
+            Assert.IsTrue(helper.ContainsAttributes("<img      width=500    required   />"));
+        }
         public void EllipsisTest()  
         {
             Helper helper = new();

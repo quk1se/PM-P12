@@ -2,12 +2,33 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace App
 {
     public class Helper
     {
+        public string HtmlTest(string input)
+        {
+            if (input is null)
+            {
+                throw new ArgumentException("Argument 'html' is null");
+            }
+            if (input.Length == 0)
+            {
+                return "";
+            }
+            input = input.Replace("<", "&lt;");
+            input = input.Replace(">", "&gt;");
+            return input;
+        }
+        public bool ContainsAttributes(String html)
+        {
+            string pattern = @"<\w+\s+[^=]*(\w+=[^>]+)+>";
+            Regex regex = new Regex(pattern, RegexOptions.IgnoreCase);
+            return regex.IsMatch(html);
+        }
         public String Ellipsis(String input, int len)
         {
             // return "He...";
