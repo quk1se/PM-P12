@@ -9,6 +9,33 @@ namespace App
 {
     public class Helper
     {
+        //Method for changes symbols in string with html encoding
+        public string HtmlTest(string input)
+        {
+            if (input is null)
+            {
+                throw new ArgumentException("Argument 'html' is null");
+            }
+            if (input.Length == 0)
+            {
+                return "";
+            }
+            input = input.Replace("<", "&lt;");
+            input = input.Replace(">", "&gt;");
+            return input;
+        }
+
+
+        //Method for checking attributes in html string
+        public bool ContainsAttributes(String html)
+        {
+            string pattern = @"<\w+\s+[^=]*(\w+=[^>]+)+>";
+            Regex regex = new Regex(pattern, RegexOptions.IgnoreCase);
+            return regex.IsMatch(html);
+        }
+
+
+        //Method for modification string
         public String Ellipsis(String input, int len)
         {
             if (input == null)

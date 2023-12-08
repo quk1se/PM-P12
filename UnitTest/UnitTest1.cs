@@ -6,13 +6,17 @@ namespace UnitTest
     public class HelperTest   
     {
         [TestMethod]
+        //Test method to change symbols with html encoding  
         public void TestEscapeHtml()
         {
             Helper helper = new();
             Assert.IsNotNull(helper, "new Helper() should not be null");
             Assert.AreEqual("&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;&lt;/body&gt;&lt;/html&gt;", helper.HtmlTest("<html><head></head><body></body></html>"));
         }
+
+
         [TestMethod]
+        //Test method to check for null in html string
         public void TestEscapeHtmlEx()
         {
             Helper helper = new();
@@ -22,7 +26,10 @@ namespace UnitTest
                 () => helper.HtmlTest(null!));
             Assert.AreEqual("Argument 'html' is null", ex.Message);
         }
+
+
         [TestMethod]
+        //Test method to check for the presence of an attribute in an html line
         public void ContainsAttributesTest()
         {
             Helper helper = new();
@@ -42,6 +49,10 @@ namespace UnitTest
             Assert.IsFalse(helper.ContainsAttributes("<div required></div>"));
             Assert.IsTrue(helper.ContainsAttributes("<img      width=500    required   />"));
         }
+
+
+        [TestMethod]
+        //Test method to comparison modify string
         public void EllipsisTest()  
         {
             Helper helper = new();
@@ -55,7 +66,6 @@ namespace UnitTest
             Assert.AreEqual(
                 "Test...",
                 helper.Ellipsis("Test String", 7));
-
         }
 
 
